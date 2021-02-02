@@ -22,6 +22,7 @@ public class MovieSession {
     @OneToOne
     @JoinColumn(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
+    @ JoinColumn(name = "show_time")
     private LocalDateTime showTime;
 
     public Long getId() {
