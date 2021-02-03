@@ -1,19 +1,22 @@
 package com.cinema;
 
+import com.cinema.exception.AuthenticationException;
 import com.cinema.lib.Injector;
 import com.cinema.model.CinemaHall;
 import com.cinema.model.Movie;
 import com.cinema.model.MovieSession;
+import com.cinema.service.AuthenticationService;
 import com.cinema.service.CinemaHallService;
 import com.cinema.service.MovieService;
 import com.cinema.service.MovieSessionService;
+import com.cinema.service.UserService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Main {
     private static Injector injector = Injector.getInstance("com.cinema");
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AuthenticationException {
         Movie movie1 = new Movie();
         Movie movie2 = new Movie();
         Movie movie3 = new Movie();
@@ -64,5 +67,12 @@ public class Main {
         movieSessionService.add(movieSession3);
         movieSessionService.findAvailableSessions(movie1.getId(),
                 LocalDate.of(2020, 1, 10)).forEach(System.out::println);
+
+        UserService userService = (UserService) injector.getInstance(UserService.class);
+        AuthenticationService authenticationService =
+                (AuthenticationService) injector.getInstance(AuthenticationService.class);
+        authenticationService.register("max", "1234");
+        authenticationService.register("bob", "1234");
+        System.out.println(authenticationService.login("max", "1234"));
     }
 }
