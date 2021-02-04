@@ -5,15 +5,18 @@ import com.cinema.lib.Injector;
 import com.cinema.model.CinemaHall;
 import com.cinema.model.Movie;
 import com.cinema.model.MovieSession;
+import com.cinema.model.Order;
 import com.cinema.model.ShoppingCart;
 import com.cinema.model.User;
 import com.cinema.service.AuthenticationService;
 import com.cinema.service.CinemaHallService;
 import com.cinema.service.MovieService;
 import com.cinema.service.MovieSessionService;
+import com.cinema.service.OrderService;
 import com.cinema.service.ShoppingCartService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Main {
     private static Injector injector = Injector.getInstance("com.cinema");
@@ -80,9 +83,14 @@ public class Main {
                 (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
         shoppingCartService.addSession(movieSession1,max);
         shoppingCartService.addSession(movieSession2,max);
-        ShoppingCart byUser = shoppingCartService.getByUser(max);
-        System.out.println(byUser);
-        shoppingCartService.clear(byUser);
-        System.out.println(byUser);
+        ShoppingCart shoppingCartByUserMax = shoppingCartService.getByUser(max);
+        System.out.println(shoppingCartByUserMax);
+        shoppingCartService.addSession(movieSession1,max);
+
+        OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
+        Order orderForMax = orderService.completeOrder(shoppingCartByUserMax);
+        System.out.println(orderForMax);
+        List<Order> ordersHistoryForUserMax = orderService.getOrdersHistory(max);
+        System.out.println(ordersHistoryForUserMax);
     }
 }
