@@ -5,11 +5,13 @@ import com.cinema.lib.Injector;
 import com.cinema.model.CinemaHall;
 import com.cinema.model.Movie;
 import com.cinema.model.MovieSession;
+import com.cinema.model.ShoppingCart;
+import com.cinema.model.User;
 import com.cinema.service.AuthenticationService;
 import com.cinema.service.CinemaHallService;
 import com.cinema.service.MovieService;
 import com.cinema.service.MovieSessionService;
-import com.cinema.service.UserService;
+import com.cinema.service.ShoppingCartService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -68,11 +70,19 @@ public class Main {
         movieSessionService.findAvailableSessions(movie1.getId(),
                 LocalDate.of(2020, 1, 10)).forEach(System.out::println);
 
-        UserService userService = (UserService) injector.getInstance(UserService.class);
         AuthenticationService authenticationService =
                 (AuthenticationService) injector.getInstance(AuthenticationService.class);
-        authenticationService.register("max", "1234");
-        authenticationService.register("bob", "1234");
+        User max = authenticationService.register("max", "1234");
+        User bob = authenticationService.register("bob", "1234");
         System.out.println(authenticationService.login("max", "1234"));
+
+        ShoppingCartService shoppingCartService =
+                (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
+        shoppingCartService.addSession(movieSession1,max);
+        shoppingCartService.addSession(movieSession2,max);
+        ShoppingCart byUser = shoppingCartService.getByUser(max);
+        System.out.println(byUser);
+        shoppingCartService.clear(byUser);
+        System.out.println(byUser);
     }
 }
