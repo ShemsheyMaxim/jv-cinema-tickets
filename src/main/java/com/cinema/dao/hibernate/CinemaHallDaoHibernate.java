@@ -2,22 +2,30 @@ package com.cinema.dao.hibernate;
 
 import com.cinema.dao.CinemaHallDao;
 import com.cinema.exception.DataProcessingException;
-import com.cinema.lib.Dao;
 import com.cinema.model.CinemaHall;
-import com.cinema.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class CinemaHallDaoHibernate implements CinemaHallDao {
+    private final SessionFactory sessionFactory;
+
+    @Autowired
+    public CinemaHallDaoHibernate(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         Session session = null;
         Transaction transaction = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.persist(cinemaHall);
             transaction.commit();
@@ -37,9 +45,9 @@ public class CinemaHallDaoHibernate implements CinemaHallDao {
 
     @Override
     public List<CinemaHall> getAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query<CinemaHall> getAllCinemaHalls =
-                    session.createQuery("FROM CinemaHall", CinemaHall.class);
+                    session.createQuery("SELECT ch FROM CinemaHall ch", CinemaHall.class);
             return getAllCinemaHalls.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Error retrieving all cinemaHalls. ",e);

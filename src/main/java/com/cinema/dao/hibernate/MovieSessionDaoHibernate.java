@@ -2,24 +2,32 @@ package com.cinema.dao.hibernate;
 
 import com.cinema.dao.MovieSessionDao;
 import com.cinema.exception.DataProcessingException;
-import com.cinema.lib.Dao;
 import com.cinema.model.MovieSession;
-import com.cinema.util.HibernateUtil;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class MovieSessionDaoHibernate implements MovieSessionDao {
+    private final SessionFactory sessionFactory;
+
+    @Autowired
+    public MovieSessionDaoHibernate(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @Override
     public MovieSession add(MovieSession movieSession) {
         Session session = null;
         Transaction transaction = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.persist(movieSession);
             transaction.commit();
@@ -39,7 +47,7 @@ public class MovieSessionDaoHibernate implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query<MovieSession> sessionsOfMovieQuery =
                     session.createQuery("SELECT ms FROM MovieSession ms "
                             + "WHERE ms.movie.id = :movieId "
