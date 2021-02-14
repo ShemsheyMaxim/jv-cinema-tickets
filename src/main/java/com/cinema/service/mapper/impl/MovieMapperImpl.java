@@ -4,7 +4,9 @@ import com.cinema.model.Movie;
 import com.cinema.model.dto.MovieRequestDto;
 import com.cinema.model.dto.MovieResponseDto;
 import com.cinema.service.mapper.MovieMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MovieMapperImpl implements MovieMapper {
     @Override
     public MovieResponseDto toMovieDto(Movie movie) {

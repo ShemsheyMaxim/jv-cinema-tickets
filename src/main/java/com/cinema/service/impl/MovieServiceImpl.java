@@ -25,4 +25,10 @@ public class MovieServiceImpl implements MovieService {
     public List<Movie> getAll() {
         return movieDao.getAll();
     }
+
+    @Override
+    public Movie get(Long movieId) {
+        return movieDao.get(movieId).orElseThrow(() ->
+                new RuntimeException("Movie for id " + movieId + " not found."));
+    }
 }
