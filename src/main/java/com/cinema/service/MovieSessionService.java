@@ -9,6 +9,8 @@ public interface MovieSessionService {
 
     MovieSession add(MovieSession movieSession);
 
+    MovieSession get(Long id);
+
     MovieSession update(MovieSession movieSession);
 
     MovieSession delete(Long movieSessionId);

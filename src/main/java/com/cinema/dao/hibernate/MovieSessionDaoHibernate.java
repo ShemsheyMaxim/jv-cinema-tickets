@@ -6,6 +6,7 @@ import com.cinema.model.MovieSession;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -42,6 +43,16 @@ public class MovieSessionDaoHibernate implements MovieSessionDao {
             if (session != null) {
                 session.close();
             }
+        }
+    }
+
+    @Override
+    public Optional<MovieSession> get(Long id) {
+        try (Session session = sessionFactory.openSession()){
+            MovieSession movieSession = session.get(MovieSession.class, id);
+            return Optional.ofNullable(movieSession);
+        }catch (Exception e){
+            throw new DataProcessingException("Can't find movie session for id: " + id, e);
         }
     }
 
