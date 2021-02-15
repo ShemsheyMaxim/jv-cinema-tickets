@@ -88,25 +88,16 @@ public class MovieSessionDaoHibernate implements MovieSessionDao {
     }
 
     @Override
-    public MovieSession delete(MovieSession movieSession) {
-        Session session = null;
-        Transaction transaction = null;
-        try {
-            session = sessionFactory.openSession();
-            transaction = session.beginTransaction();
-            session.delete(movieSession);
-            transaction.commit();
-            return movieSession;
+    public MovieSession delete(Long movieSessionId) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<MovieSession> deleteMovieSessionQuery =
+                    session.createQuery("DELETE FROM MovieSession ms "
+                    + "WHERE id = :movieSessionId", MovieSession.class);
+            deleteMovieSessionQuery.setParameter("movieSessionId", movieSessionId);
+            return deleteMovieSessionQuery.getSingleResult();
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             throw new DataProcessingException("Can't delete move session for id "
-                    + movieSession.getId(), e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
+                    + movieSessionId, e);
         }
     }
 }
