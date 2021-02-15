@@ -48,10 +48,10 @@ public class MovieSessionDaoHibernate implements MovieSessionDao {
 
     @Override
     public Optional<MovieSession> get(Long id) {
-        try (Session session = sessionFactory.openSession()){
+        try (Session session = sessionFactory.openSession()) {
             MovieSession movieSession = session.get(MovieSession.class, id);
             return Optional.ofNullable(movieSession);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new DataProcessingException("Can't find movie session for id: " + id, e);
         }
     }
@@ -103,7 +103,7 @@ public class MovieSessionDaoHibernate implements MovieSessionDao {
         try (Session session = sessionFactory.openSession()) {
             Query<MovieSession> deleteMovieSessionQuery =
                     session.createQuery("DELETE FROM MovieSession ms "
-                    + "WHERE id = :movieSessionId", MovieSession.class);
+                            + "WHERE id = :movieSessionId", MovieSession.class);
             deleteMovieSessionQuery.setParameter("movieSessionId", movieSessionId);
             return deleteMovieSessionQuery.getSingleResult();
         } catch (Exception e) {
