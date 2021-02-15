@@ -25,4 +25,10 @@ public class CinemaHallServiceImpl implements CinemaHallService {
     public List<CinemaHall> getAll() {
         return cinemaHallDao.getAll();
     }
+
+    @Override
+    public CinemaHall get(Long cinemaHallId) {
+        return cinemaHallDao.get(cinemaHallId).orElseThrow(() ->
+                new RuntimeException("Cinema hall for id: " + cinemaHallId + " not found."));
+    }
 }
