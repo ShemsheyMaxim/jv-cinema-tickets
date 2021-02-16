@@ -33,7 +33,7 @@ public class ShoppingCartMapperImpl implements ShoppingCartMapper {
                 .stream()
                 .map(Ticket::getId)
                 .collect(Collectors.toList());
-        responseDto.setTicketsId(ticketsId);
+        responseDto.setTicketIds(ticketsId);
         return responseDto;
     }
 
