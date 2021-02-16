@@ -9,8 +9,8 @@ import com.cinema.model.dto.OrderResponseDto;
 import com.cinema.service.ShoppingCartService;
 import com.cinema.service.UserService;
 import com.cinema.service.mapper.OrderMapper;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,11 +31,10 @@ public class OrderMapperImpl implements OrderMapper {
         responseDto.setId(order.getId());
         responseDto.setUserId(order.getUser().getId());
         responseDto.setOrderDate(order.getOrderDate());
-        List<Long> ticketsId = new ArrayList<>();
-        List<Ticket> tickets = order.getTickets();
-        for (Ticket ticket : tickets) {
-            ticketsId.add(ticket.getId());
-        }
+        List<Long> ticketsId = order.getTickets()
+                .stream()
+                .map(Ticket::getId)
+                .collect(Collectors.toList());
         responseDto.setTicketsId(ticketsId);
         return responseDto;
     }

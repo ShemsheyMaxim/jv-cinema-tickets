@@ -8,13 +8,13 @@ import com.cinema.service.UserService;
 import com.cinema.service.mapper.OrderMapper;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/orders")
 public class OrderController {
     private final OrderMapper orderMapper;

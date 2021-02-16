@@ -5,12 +5,12 @@ import com.cinema.model.dto.UserResponseDto;
 import com.cinema.service.UserService;
 import com.cinema.service.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/users")
 public class UserController {
     private final UserMapper userMapper;
