@@ -16,11 +16,11 @@ public class OrderMapperImpl implements OrderMapper {
         responseDto.setId(order.getId());
         responseDto.setUserId(order.getUser().getId());
         responseDto.setOrderDate(order.getOrderDate());
-        List<Long> ticketsId = order.getTickets()
+        List<Long> ticketIds = order.getTickets()
                 .stream()
                 .map(Ticket::getId)
                 .collect(Collectors.toList());
-        responseDto.setTicketIds(ticketsId);
+        responseDto.setTicketIds(ticketIds);
         return responseDto;
     }
 }
