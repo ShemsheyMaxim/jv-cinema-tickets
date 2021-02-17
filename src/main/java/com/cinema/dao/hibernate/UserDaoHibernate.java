@@ -54,4 +54,14 @@ public class UserDaoHibernate implements UserDao {
                     + email + " in table. ", e);
         }
     }
+
+    @Override
+    public Optional<User> get(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            User user = session.get(User.class, id);
+            return Optional.ofNullable(user);
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't find user for id " + id, e);
+        }
+    }
 }
