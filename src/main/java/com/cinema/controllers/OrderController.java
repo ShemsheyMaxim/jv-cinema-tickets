@@ -35,25 +35,17 @@ public class OrderController {
 
     @PostMapping("/complete")
     public void completeOrder(Authentication authentication) {
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) principal;
-            String email = userDetails.getUsername();
-            ShoppingCart shoppingCartByUserEmail = shoppingCartService
-                    .getByUser(userService.findByEmail(email).get());
-            orderService.completeOrder(shoppingCartByUserEmail);
-        }
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        String email = principal.getUsername();
+        ShoppingCart shoppingCartByUserEmail = shoppingCartService
+                .getByUser(userService.findByEmail(email).get());
+        orderService.completeOrder(shoppingCartByUserEmail);
     }
 
     @GetMapping
     public List<OrderResponseDto> getHistoryOrdersForUser(Authentication authentication) {
-        Object principal = authentication.getPrincipal();
-        String email = null;
-        if (principal instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) principal;
-            email = userDetails.getUsername();
-
-        }
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        String email = principal.getUsername();
         return orderService.getOrdersHistory(userService.findByEmail(email).get())
                 .stream()
                 .map(orderMapper::toOrderDto)

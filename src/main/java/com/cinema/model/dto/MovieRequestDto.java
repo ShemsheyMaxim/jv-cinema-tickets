@@ -1,6 +1,11 @@
 package com.cinema.model.dto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class MovieRequestDto {
+    @NotNull
+    @NotEmpty
     private String title;
     private String description;
 
