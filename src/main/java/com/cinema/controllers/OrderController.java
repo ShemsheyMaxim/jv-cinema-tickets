@@ -9,10 +9,11 @@ import com.cinema.service.mapper.OrderMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -33,14 +34,27 @@ public class OrderController {
     }
 
     @PostMapping("/complete")
-    public void completeOrder(@RequestParam Long userId) {
-        ShoppingCart shoppingCartForUser = shoppingCartService.getByUser(userService.get(userId));
-        orderService.completeOrder(shoppingCartForUser);
+    public void completeOrder(Authentication authentication) {
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) principal;
+            String email = userDetails.getUsername();
+            ShoppingCart shoppingCartByUserEmail = shoppingCartService
+                    .getByUser(userService.findByEmail(email).get());
+            orderService.completeOrder(shoppingCartByUserEmail);
+        }
     }
 
     @GetMapping
-    public List<OrderResponseDto> getHistoryOrdersForUser(@RequestParam Long userId) {
-        return orderService.getOrdersHistory(userService.get(userId))
+    public List<OrderResponseDto> getHistoryOrdersForUser(Authentication authentication) {
+        Object principal = authentication.getPrincipal();
+        String email = null;
+        if (principal instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) principal;
+            email = userDetails.getUsername();
+
+        }
+        return orderService.getOrdersHistory(userService.findByEmail(email).get())
                 .stream()
                 .map(orderMapper::toOrderDto)
                 .collect(Collectors.toList());

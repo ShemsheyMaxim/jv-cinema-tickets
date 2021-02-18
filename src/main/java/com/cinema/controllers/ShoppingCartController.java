@@ -8,6 +8,8 @@ import com.cinema.service.ShoppingCartService;
 import com.cinema.service.UserService;
 import com.cinema.service.mapper.ShoppingCartMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,14 +36,25 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/movie-sessions")
-    public void addMovieSession(@RequestParam Long userId, @RequestParam Long movieSessionId) {
-        shoppingCartService.addSession(movieSessionService.get(movieSessionId),
-                userService.get(userId));
+    public void addMovieSession(Authentication authentication, @RequestParam Long movieSessionId) {
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) principal;
+            String email = userDetails.getUsername();
+            shoppingCartService.addSession(movieSessionService.get(movieSessionId),
+                    userService.findByEmail(email).get());
+        }
     }
 
     @GetMapping("/by-user")
-    public ShoppingCartResponseDto getByUser(@RequestParam Long userId) {
-        User user = userService.get(userId);
+    public ShoppingCartResponseDto getByUser(Authentication authentication) {
+        Object principal = authentication.getPrincipal();
+        String email = null;
+        if (principal instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) principal;
+            email = userDetails.getUsername();
+        }
+        User user = userService.findByEmail(email).get();
         ShoppingCart shoppingCartForUser = shoppingCartService.getByUser(user);
         return shoppingCartMapper.toShoppingCartDto(shoppingCartForUser);
     }
