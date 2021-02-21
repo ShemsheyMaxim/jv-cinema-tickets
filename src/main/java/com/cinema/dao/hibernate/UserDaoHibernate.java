@@ -46,7 +46,8 @@ public class UserDaoHibernate implements UserDao {
     public Optional<User> findByEmail(String email) {
         try (Session session = sessionFactory.openSession()) {
             Query<User> findUserByEmailQuery =
-                    session.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class);
+                    session.createQuery("SELECT u FROM User u "
+                            + "LEFT JOIN FETCH u.roles WHERE u.email = :email", User.class);
             findUserByEmailQuery.setParameter("email", email);
             return findUserByEmailQuery.uniqueResultOptional();
         } catch (Exception e) {
