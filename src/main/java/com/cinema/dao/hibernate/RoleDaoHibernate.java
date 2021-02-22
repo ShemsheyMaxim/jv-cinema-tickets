@@ -3,6 +3,7 @@ package com.cinema.dao.hibernate;
 import com.cinema.dao.RoleDao;
 import com.cinema.exception.DataProcessingException;
 import com.cinema.model.Role;
+import com.cinema.model.RoleType;
 import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -43,15 +44,15 @@ public class RoleDaoHibernate implements RoleDao {
     }
 
     @Override
-    public Optional<Role> getRoleByName(String roleName) {
+    public Optional<Role> getRoleByName(String roleType) {
         try (Session session = sessionFactory.openSession()) {
             Query<Role> roleByNameQuery = session.createQuery("SELECT r FROM Role r "
-                    + "WHERE r.roleType = :roleName", Role.class);
-            roleByNameQuery.setParameter("roleName", roleName);
+                    + "WHERE r.roleType = :roleType", Role.class);
+            roleByNameQuery.setParameter("roleType", RoleType.valueOf(roleType));
             return roleByNameQuery.uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find role by name "
-                    + roleName + " in table.", e);
+                    + roleType + " in table.", e);
         }
     }
 }
