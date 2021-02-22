@@ -30,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         builder.roles(user.getRoles()
                 .stream()
                 .map(Role::getTypeRole)
-                .map(RoleType::getRole)
+                .map(RoleType::toString)
                 .toArray(String[]::new));
         return builder.build();
     }
