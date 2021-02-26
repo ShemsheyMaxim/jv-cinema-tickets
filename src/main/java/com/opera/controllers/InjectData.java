@@ -39,5 +39,11 @@ public class InjectData {
         admin.setRoles(Set.of(roleAdmin));
         userService.add(admin);
         shoppingCartService.registerNewShoppingCart(admin);
+        User user = new User();
+        user.setEmail("user@gmail.com");
+        user.setPassword("User123");
+        user.setRoles(Set.of(roleUser));
+        userService.add(user);
+        shoppingCartService.registerNewShoppingCart(user);
     }
 }
