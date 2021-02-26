@@ -103,7 +103,7 @@ public class MovieSessionDaoHibernate implements MovieSessionDao {
         try (Session session = sessionFactory.openSession()) {
             Query<MovieSession> deleteMovieSessionQuery =
                     session.createQuery("DELETE FROM MovieSession ms "
-                            + "WHERE id = :movieSessionId", MovieSession.class);
+                            + "WHERE ms.id = :movieSessionId", MovieSession.class);
             deleteMovieSessionQuery.setParameter("movieSessionId", movieSessionId);
             return deleteMovieSessionQuery.getSingleResult();
         } catch (Exception e) {
