@@ -10,14 +10,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ticket")
+@Table(name = "tickets")
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "movie_session_id")
-    private MovieSession movieSession;
+    @JoinColumn(name = "performance_session_id")
+    private PerformanceSession performanceSession;
     @ManyToOne
     private User user;
 
@@ -29,12 +29,12 @@ public class Ticket {
         this.id = id;
     }
 
-    public MovieSession getMovieSession() {
-        return movieSession;
+    public PerformanceSession getPerformanceSession() {
+        return performanceSession;
     }
 
-    public void setMovieSession(MovieSession movieSession) {
-        this.movieSession = movieSession;
+    public void setPerformanceSession(PerformanceSession performanceSession) {
+        this.performanceSession = performanceSession;
     }
 
     public User getUser() {
@@ -54,20 +54,21 @@ public class Ticket {
             return false;
         }
         Ticket ticket = (Ticket) o;
-        return Objects.equals(id, ticket.id) && Objects.equals(movieSession, ticket.movieSession)
+        return Objects.equals(id, ticket.id)
+                && Objects.equals(performanceSession, ticket.performanceSession)
                 && Objects.equals(user, ticket.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, movieSession, user);
+        return Objects.hash(id, performanceSession, user);
     }
 
     @Override
     public String toString() {
         return "Ticket{"
                 + "id=" + id
-                + ", movieSession=" + movieSession
+                + ", performanceSession=" + performanceSession
                 + ", user=" + user
                 + '}';
     }

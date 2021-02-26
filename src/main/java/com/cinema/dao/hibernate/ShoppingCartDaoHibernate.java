@@ -52,7 +52,7 @@ public class ShoppingCartDaoHibernate implements ShoppingCartDao {
             findByUserQuery.setParameter("user", user);
             return findByUserQuery.getSingleResult();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't find shopping cert by user " + user, e);
+            throw new DataProcessingException("Can't find shopping cart by user " + user, e);
         }
     }
 

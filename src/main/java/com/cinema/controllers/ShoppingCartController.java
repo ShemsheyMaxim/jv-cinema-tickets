@@ -3,7 +3,7 @@ package com.cinema.controllers;
 import com.cinema.model.ShoppingCart;
 import com.cinema.model.User;
 import com.cinema.model.dto.ShoppingCartResponseDto;
-import com.cinema.service.MovieSessionService;
+import com.cinema.service.PerformanceSessionService;
 import com.cinema.service.ShoppingCartService;
 import com.cinema.service.UserService;
 import com.cinema.service.mapper.ShoppingCartMapper;
@@ -21,25 +21,26 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShoppingCartController {
     private final ShoppingCartMapper shoppingCartMapper;
     private final ShoppingCartService shoppingCartService;
-    private final MovieSessionService movieSessionService;
+    private final PerformanceSessionService performanceSessionService;
     private final UserService userService;
 
     @Autowired
     public ShoppingCartController(ShoppingCartMapper shoppingCartMapper,
                                   ShoppingCartService shoppingCartService,
-                                  MovieSessionService movieSessionService,
+                                  PerformanceSessionService performanceSessionService,
                                   UserService userService) {
         this.shoppingCartMapper = shoppingCartMapper;
         this.shoppingCartService = shoppingCartService;
-        this.movieSessionService = movieSessionService;
+        this.performanceSessionService = performanceSessionService;
         this.userService = userService;
     }
 
-    @PostMapping("/movie-sessions")
-    public void addMovieSession(Authentication authentication, @RequestParam Long movieSessionId) {
+    @PostMapping("/performance-sessions")
+    public void addPerformanceSession(Authentication authentication,
+                                      @RequestParam Long performanceSessionId) {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         String email = principal.getUsername();
-        shoppingCartService.addSession(movieSessionService.get(movieSessionId),
+        shoppingCartService.addSession(performanceSessionService.get(performanceSessionId),
                 userService.findByEmail(email).get());
     }
 

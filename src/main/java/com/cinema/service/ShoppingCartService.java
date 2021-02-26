@@ -1,11 +1,11 @@
 package com.cinema.service;
 
-import com.cinema.model.MovieSession;
+import com.cinema.model.PerformanceSession;
 import com.cinema.model.ShoppingCart;
 import com.cinema.model.User;
 
 public interface ShoppingCartService {
-    void addSession(MovieSession movieSession, User user);
+    void addSession(PerformanceSession performanceSession, User user);
 
     ShoppingCart getByUser(User user);
 

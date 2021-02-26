@@ -1,6 +1,6 @@
 package com.cinema.model.dto;
 
-public class CinemaHallResponseDto {
+public class StageResponseDto {
     private Long id;
     private int capacity;
     private String description;

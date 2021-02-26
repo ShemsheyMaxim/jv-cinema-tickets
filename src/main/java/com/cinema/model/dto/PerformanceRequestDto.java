@@ -3,7 +3,7 @@ package com.cinema.model.dto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class MovieRequestDto {
+public class PerformanceRequestDto {
     @NotNull
     @NotEmpty
     private String title;

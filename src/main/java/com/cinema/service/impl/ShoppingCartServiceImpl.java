@@ -2,7 +2,7 @@ package com.cinema.service.impl;
 
 import com.cinema.dao.ShoppingCartDao;
 import com.cinema.dao.TicketDao;
-import com.cinema.model.MovieSession;
+import com.cinema.model.PerformanceSession;
 import com.cinema.model.ShoppingCart;
 import com.cinema.model.Ticket;
 import com.cinema.model.User;
@@ -23,9 +23,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public void addSession(MovieSession movieSession, User user) {
+    public void addSession(PerformanceSession performanceSession, User user) {
         Ticket ticket = new Ticket();
-        ticket.setMovieSession(movieSession);
+        ticket.setPerformanceSession(performanceSession);
         ticket.setUser(user);
         ShoppingCart userShoppingCart = shoppingCartDao.getByUser(user);
         List<Ticket> tickets = userShoppingCart.getTickets();

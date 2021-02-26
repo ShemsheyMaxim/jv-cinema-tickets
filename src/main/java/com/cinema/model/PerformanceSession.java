@@ -12,16 +12,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "movie_session")
-public class MovieSession {
+@Table(name = "performance_sessions")
+public class PerformanceSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    private Movie movie;
+    private Performance performance;
     @ManyToOne
-    @JoinColumn(name = "cinema_hall_id")
-    private CinemaHall cinemaHall;
+    @JoinColumn(name = "stage_id")
+    private Stage stage;
     @Column(name = "show_time")
     private LocalDateTime showTime;
 
@@ -33,20 +33,20 @@ public class MovieSession {
         this.id = id;
     }
 
-    public Movie getMovie() {
-        return movie;
+    public Performance getPerformance() {
+        return performance;
     }
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
+    public void setPerformance(Performance performance) {
+        this.performance = performance;
     }
 
-    public CinemaHall getCinemaHall() {
-        return cinemaHall;
+    public Stage getStage() {
+        return stage;
     }
 
-    public void setCinemaHall(CinemaHall cinemaHall) {
-        this.cinemaHall = cinemaHall;
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
     public LocalDateTime getShowTime() {
@@ -65,23 +65,23 @@ public class MovieSession {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        MovieSession that = (MovieSession) o;
-        return Objects.equals(id, that.id) && Objects.equals(movie, that.movie)
-                && Objects.equals(cinemaHall, that.cinemaHall)
+        PerformanceSession that = (PerformanceSession) o;
+        return Objects.equals(id, that.id) && Objects.equals(performance, that.performance)
+                && Objects.equals(stage, that.stage)
                 && Objects.equals(showTime, that.showTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, movie, cinemaHall, showTime);
+        return Objects.hash(id, performance, stage, showTime);
     }
 
     @Override
     public String toString() {
-        return "MovieSession{"
+        return "PerformanceSession{"
                 + "id=" + id
-                + ", movie=" + movie
-                + ", cinemaHall=" + cinemaHall
+                + ", performance=" + performance
+                + ", stage=" + stage
                 + ", showTime=" + showTime
                 + '}';
     }
