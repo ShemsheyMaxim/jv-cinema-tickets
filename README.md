@@ -9,7 +9,7 @@ DAO layer, Service layer, Controllers layer. Project was
 developed according to SOLID principles with authorization 
 and authentication.
 
-###Project structure
+### Project structure
 
 ___UML diagram that describes the relationship between the 
 entities.___
@@ -34,7 +34,7 @@ entities.___
 - Registration
 - Authorization
 
-###Technologies stack:
+### Technologies stack:
 
 ![Flutter](https://img.shields.io/badge/-Java-9400D3?style=for-the-badge&logo=java&logoColor=FFFFFF)
 ![SQL](https://img.shields.io/badge/-SQL-FFFF00?style=for-the-badge&logo=mysql&logoColor=000000)
@@ -46,7 +46,7 @@ entities.___
 ![Travis](https://img.shields.io/badge/-travis-FFFF00?style=for-the-badge&logo=travis-ci&logoColor=000000)
 ![Maven](https://img.shields.io/badge/-Maven-9400D3?style=for-the-badge&logo=Apache-Maven#F8DC75&logoColor=FFFFFF)
 
-###Running the Project
+### Running the Project
 
 1. Download and install the [JDK]( https://www.oracle.com/ru/java/technologies/javase-downloads.html).
 2. Download and install servlet container ([Apache Tomcat](http://tomcat.apache.org/index.html)).
