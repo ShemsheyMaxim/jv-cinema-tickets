@@ -14,7 +14,7 @@ and authentication.
 ___UML diagram that describes the relationship between the 
 entities.___
 
-![img.png?raw=true](umlDiagrame.png)
+![img.png?raw=true](umlDiagram.png)
 
  Admin: 
 - View / add performance
