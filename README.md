@@ -36,7 +36,7 @@ entities.___
 
 ### Technologies stack:
 
-![Flutter](https://img.shields.io/badge/-Java-9400D3?style=for-the-badge&logo=java&logoColor=FFFFFF)
+![Java](https://img.shields.io/badge/-Java-9400D3?style=for-the-badge&logo=java&logoColor=FFFFFF)
 ![SQL](https://img.shields.io/badge/-SQL-FFFF00?style=for-the-badge&logo=mysql&logoColor=000000)
 ![Spring Web MVC](https://img.shields.io/badge/-Spring_Web_MVC-9400D3?style=for-the-badge&logo=spring&logoColor=FFFFFF)
 ![Spring Security](https://img.shields.io/badge/-Spring_Security-FFFF00?style=for-the-badge&logo=spring&logoColor=000000)
